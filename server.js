@@ -30,10 +30,43 @@ function sendFile(req, res, file) {
     }
 
     const extension = path.extname(file).toLowerCase();
+    const type = mime[extension] || 'application/octet-stream';
+    const cache = extension === '.html' ? 'no-store, max-age=0' : 'public, max-age=604800';
+    const range = req.headers.range;
+
+    if (range && (extension === '.mp4' || extension === '.webm')) {
+      const match = /bytes=(\d*)-(\d*)/.exec(range);
+      const start = match && match[1] ? Number(match[1]) : 0;
+      const end = match && match[2] ? Math.min(Number(match[2]), stat.size - 1) : stat.size - 1;
+
+      if (!Number.isFinite(start) || !Number.isFinite(end) || start > end || start >= stat.size) {
+        res.writeHead(416, { 'Content-Range': 'bytes */' + stat.size });
+        res.end();
+        return;
+      }
+
+      res.writeHead(206, {
+        'Content-Type': type,
+        'Content-Length': end - start + 1,
+        'Content-Range': 'bytes ' + start + '-' + end + '/' + stat.size,
+        'Accept-Ranges': 'bytes',
+        'Cache-Control': cache
+      });
+
+      if (req.method === 'HEAD') {
+        res.end();
+        return;
+      }
+
+      fs.createReadStream(file, { start, end }).pipe(res);
+      return;
+    }
+
     res.writeHead(200, {
-      'Content-Type': mime[extension] || 'application/octet-stream',
+      'Content-Type': type,
       'Content-Length': stat.size,
-      'Cache-Control': extension === '.html' ? 'no-store, max-age=0' : 'public, max-age=604800'
+      'Accept-Ranges': 'bytes',
+      'Cache-Control': cache
     });
 
     if (req.method === 'HEAD') {
