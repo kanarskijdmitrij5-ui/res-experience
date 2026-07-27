@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>RES Experience — пространства для событий</title>
+  <meta name="description" content="RES создаёт пространства для событий любого масштаба.">
+  <link rel="preload" href="assets/video/build.mp4" as="video" type="video/mp4">
+  <style>
+    :root{--bg:#000;--paper:#f4f4f0;--text:#f5f5f2;--muted:#9b9b96;--line:rgba(255,255,255,.16);--red:#ed1c24}
+    *{box-sizing:border-box}
+    html{background:var(--bg);scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img,video{display:block;max-width:100%}
+    .intro{position:fixed;inset:0;z-index:100;background:#000;display:grid;place-items:center;transition:opacity .8s ease,visibility .8s ease}.intro.hide{opacity:0;visibility:hidden}.intro-logo{font-size:clamp(42px,8vw,92px);letter-spacing:.28em;font-weight:600;opacity:0;transform:translateY(10px);animation:introIn 1.1s cubic-bezier(.2,.7,.2,1) .15s forwards}.intro-logo:before{content:"";display:inline-block;width:clamp(28px,4vw,54px);height:3px;background:var(--red);vertical-align:middle;margin:0 16px 12px 0}@keyframes introIn{to{opacity:1;transform:none}}
+    .nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(20px,4vw,64px);mix-blend-mode:difference;pointer-events:none}
+    .nav a{pointer-events:auto}
+    .brand{font-size:24px;letter-spacing:.22em;font-weight:600}.brand:before{content:"";display:inline-block;width:20px;height:2px;background:var(--red);vertical-align:middle;margin:0 9px 5px 0}
+    .contact-link{font-size:11px;text-transform:uppercase;letter-spacing:.2em}
+    .hero{position:relative;height:100svh;min-height:640px;background:#050505;overflow:hidden;display:flex;align-items:flex-end}
+    .hero video,.cinema video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .hero video{filter:brightness(.62) contrast(1.06);animation:heroReveal 1.6s ease .65s both}@keyframes heroReveal{from{opacity:0;transform:scale(1.015)}to{opacity:1;transform:none}}
+    .hero:after,.cinema:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.12) 42%,rgba(0,0,0,.82))}
+    .hero-copy{position:relative;z-index:2;padding:0 clamp(20px,6vw,88px) clamp(54px,8vw,110px);max-width:1150px}
+    .kicker{font-size:11px;letter-spacing:.28em;text-transform:uppercase;margin-bottom:22px;color:#d2d2cf}
+    h1{font-size:clamp(54px,9vw,132px);line-height:.9;letter-spacing:-.06em;font-weight:430;margin:0;max-width:1100px}
+    .hero-copy p{font-size:clamp(16px,1.5vw,23px);line-height:1.45;color:#d0d0cc;max-width:650px;margin:28px 0 0}
+    .chapter{min-height:82svh;display:flex;align-items:center;padding:clamp(100px,15vw,210px) clamp(20px,6vw,88px)}
+    .chapter h2{font-size:clamp(48px,8vw,118px);line-height:.96;letter-spacing:-.055em;font-weight:420;margin:0;max-width:1240px}
+    .chapter h2 em{font-style:normal;color:var(--red)}
+    .cinema{position:relative;height:90svh;min-height:640px;overflow:hidden;background:#050505}
+    .cinema video{filter:brightness(.72) contrast(1.04);opacity:0;transition:opacity 1s ease}.cinema.in-view video{opacity:1}
+    .cinema-copy{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;padding:0 clamp(20px,6vw,88px) clamp(54px,8vw,105px)}
+    .cinema-copy h3{font-size:clamp(44px,7vw,96px);line-height:.98;letter-spacing:-.05em;font-weight:420;margin:0;max-width:1050px}
+    .story{padding:clamp(90px,12vw,170px) clamp(16px,4vw,56px)}
+    .story-title{padding:0 clamp(4px,2vw,28px) clamp(60px,8vw,110px)}
+    .story-title h3{font-size:clamp(42px,7vw,100px);line-height:.96;letter-spacing:-.05em;font-weight:420;margin:0;max-width:1080px}
+    .editorial{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(8px,1.2vw,18px)}
+    .shot{position:relative;overflow:hidden;background:#111;min-height:320px}
+    .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1),filter .8s ease;filter:brightness(.98) contrast(1.02)}
+    .shot:hover img{transform:scale(1.018)}
+    .wide{grid-column:span 12;aspect-ratio:16/8.5}.half{grid-column:span 6;aspect-ratio:4/3}.third{grid-column:span 4;aspect-ratio:4/5}.tall{grid-column:span 5;aspect-ratio:4/5}.seven{grid-column:span 7;aspect-ratio:16/10}.eight{grid-column:span 8;aspect-ratio:16/10}.four{grid-column:span 4;aspect-ratio:4/5}
+    .interlude{min-height:75svh;display:flex;align-items:center;padding:clamp(100px,15vw,220px) clamp(20px,6vw,88px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .interlude p{margin:0;font-size:clamp(46px,8vw,112px);line-height:.96;letter-spacing:-.055em;max-width:1180px}
+    .services{padding:clamp(100px,14vw,190px) clamp(20px,6vw,88px)}
+    .services h3{font-size:clamp(48px,8vw,112px);letter-spacing:-.055em;font-weight:420;margin:0 0 58px}
+    .service{display:flex;justify-content:space-between;gap:30px;border-top:1px solid var(--line);padding:25px 0;font-size:clamp(22px,3vw,44px)}
+    .service:last-child{border-bottom:1px solid var(--line)}.service small{color:var(--muted);font-size:13px;line-height:1.4;align-self:center;text-align:right}
+    footer{min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(100px,14vw,180px) clamp(20px,6vw,88px) 40px;border-top:1px solid var(--line)}
+    footer h3{font-size:clamp(52px,9vw,126px);line-height:.91;letter-spacing:-.06em;font-weight:420;margin:0;max-width:1100px}
+    .contacts{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:90px}.contact{border:1px solid var(--line);padding:24px;min-height:155px;display:flex;flex-direction:column;justify-content:space-between;transition:.25s ease}.contact:hover{background:var(--paper);color:#000}.contact b{font-size:19px}.contact span{color:var(--muted);line-height:1.5;font-size:14px}.legal{display:flex;justify-content:space-between;gap:20px;color:#777;font-size:12px;margin-top:70px}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease}.reveal.show{opacity:1;transform:none}
+    @media(max-width:850px){.wide{aspect-ratio:4/3}.half,.third,.tall,.seven,.eight,.four{grid-column:span 6;aspect-ratio:4/3}.contacts{grid-template-columns:1fr 1fr}.cinema{height:72svh}.chapter,.interlude{min-height:65svh}}
+    @media(max-width:560px){.hero{min-height:660px}.hero-copy{padding-bottom:80px}.editorial{gap:8px}.wide,.half,.third,.tall,.seven,.eight,.four{grid-column:span 12;aspect-ratio:4/3}.contacts{grid-template-columns:1fr}.service{display:block}.service small{display:block;text-align:left;margin-top:8px}.legal{display:block}.legal span{display:block;margin-top:8px}.nav{padding-top:18px}.contact-link{display:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.shot img{transition:none}}
+  </style>
+</head>
+<body>
+<div class="intro" id="intro" aria-hidden="true"><div class="intro-logo">RES</div></div>
+<header class="nav"><a class="brand" href="#top">RES</a><a class="contact-link" href="#contacts">Связаться</a></header>
+<main id="top">
+  <section class="hero">
+    <video autoplay muted loop playsinline poster="assets/photos/p01.jpg"><source src="assets/video/build.mp4" type="video/mp4"></video>
+    <div class="hero-copy"><div class="kicker">Rent Event Service · Красноярск</div><h1>Создаём пространство.</h1><p>От пустой площадки до полностью готового события — конструкции, мебель, свет, оформление и техническое сопровождение.</p></div>
+  </section>
+
+  <section class="chapter reveal"><h2>Мы не сдаём шатры.<br><em>Мы создаём места, где происходят события.</em></h2></section>
+
+  <section class="cinema">
+    <video autoplay muted loop playsinline poster="assets/photos/p02.jpg"><source src="assets/video/ready-space.mp4" type="video/mp4"></video>
+    <div class="cinema-copy"><h3>Когда всё готово,<br>остаётся только событие.</h3></div>
+  </section>
+
+  <section class="story">
+    <div class="story-title reveal"><h3>Пространство, в которое хочется войти.</h3></div>
+    <div class="editorial">
+      <figure class="shot wide reveal"><img loading="lazy" src="assets/photos/p02.jpg" alt="Интерьер шатра RES"></figure>
+      <figure class="shot seven reveal"><img loading="lazy" src="assets/photos/p01.jpg" alt="Пагоды RES в лесной площадке"></figure>
+      <figure class="shot tall reveal"><img loading="lazy" src="assets/photos/p07.jpg" alt="Геокупольная конструкция RES"></figure>
+      <figure class="shot half reveal"><img loading="lazy" src="assets/photos/p08.jpg" alt="Лаунж-зона RES"></figure>
+      <figure class="shot half reveal"><img loading="lazy" src="assets/photos/p06.jpg" alt="Банкетное пространство RES"></figure>
+    </div>
+  </section>
+
+  <section class="interlude reveal"><p>Каждая деталь становится частью истории.</p></section>
+
+  <section class="story">
+    <div class="editorial">
+      <figure class="shot four reveal"><img loading="lazy" src="assets/photos/p03.jpg" alt="Оформление пространства RES"></figure>
+      <figure class="shot eight reveal"><img loading="lazy" src="assets/photos/p04.jpg" alt="Лаунж-пространство RES"></figure>
+      <figure class="shot half reveal"><img loading="lazy" src="assets/photos/p09.jpg" alt="Банкетная площадка RES"></figure>
+      <figure class="shot half reveal"><img loading="lazy" src="assets/photos/p10.jpg" alt="Интерьер банкетного шатра RES"></figure>
+      <figure class="shot wide reveal"><img loading="lazy" src="assets/photos/p11.jpg" alt="Пагода RES на спортивной площадке"></figure>
+    </div>
+  </section>
+
+  <section class="interlude reveal"><p>От камерного события — до масштабной площадки.</p></section>
+
+  <section class="story">
+    <div class="story-title reveal"><h3>Масштаб не меняет подход.</h3></div>
+    <div class="editorial">
+      <figure class="shot wide reveal"><img loading="lazy" src="assets/photos/p16.jpg" alt="Крупная шатровая площадка RES"></figure>
+      <figure class="shot half reveal"><img loading="lazy" src="assets/photos/p15.jpg" alt="Большой шатёр RES"></figure>
+      <figure class="shot half reveal"><img loading="lazy" src="assets/photos/p17.jpg" alt="Шатровый комплекс RES"></figure>
+      <figure class="shot seven reveal"><img loading="lazy" src="assets/photos/p29.jpg" alt="Сценическая площадка с шатрами RES"></figure>
+      <figure class="shot tall reveal"><img loading="lazy" src="assets/photos/p13.jpg" alt="Крупный проект RES"></figure>
+      <figure class="shot half reveal"><img loading="lazy" src="assets/photos/p18.jpg" alt="Геокупола RES"></figure>
+      <figure class="shot half reveal"><img loading="lazy" src="assets/photos/p14.jpg" alt="Пагоды RES на открытой площадке"></figure>
+      <figure class="shot wide reveal"><img loading="lazy" src="assets/photos/p31.jpg" alt="Комплекс пагод RES"></figure>
+    </div>
+  </section>
+
+  <section class="services reveal">
+    <h3>Всё для события.</h3>
+    <div class="service"><span>Шатры и пагоды</span><small>Конструкции для частных, корпоративных и массовых мероприятий</small></div>
+    <div class="service"><span>Мебель</span><small>Подбор, доставка и расстановка</small></div>
+    <div class="service"><span>Свет и оформление</span><small>Световые решения, текстиль и декор</small></div>
+    <div class="service"><span>Полный сервис</span><small>Проектирование, монтаж, сопровождение и демонтаж</small></div>
+  </section>
+</main>
+
+<footer id="contacts">
+  <div><h3 class="reveal">Создаём пространства,<br>в которых рождаются события.</h3>
+    <div class="contacts reveal">
+      <a class="contact" href="https://t.me/RentaService_krsk_bot" target="_blank" rel="noopener noreferrer"><b>Telegram</b><span>Рассчитать проект →</span></a>
+      <a class="contact" href="https://max.ru/id246603671402_bot" target="_blank" rel="noopener noreferrer"><b>MAX</b><span>Написать нам →</span></a>
+      <a class="contact" href="https://xn----7sbb1bcbucgclfdldh2u.xn--p1ai/" target="_blank" rel="noopener noreferrer"><b>Сайт и каталог</b><span>Посмотреть оборудование →</span></a>
+      <a class="contact" href="tel:+79135341969"><b>Пономарев Павел</b><span>Руководитель<br>+7 913 534-19-69 →</span></a>
+      <a class="contact" href="tel:+79080133066"><b>Канарский Дмитрий</b><span>Технический директор<br>+7 908 013-30-66 →</span></a>
+    </div>
+  </div>
+  <div class="legal"><span>© 2026 RES · Rent Event Service</span><span>Красноярск · Работаем по всей России</span></div>
+</footer>
+<script>
+  const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('show')}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  const cinema=document.querySelector('.cinema');
+  const cinemaIo=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting) cinema.classList.add('in-view')}),{threshold:.18});
+  if(cinema) cinemaIo.observe(cinema);
+  window.addEventListener('load',()=>setTimeout(()=>document.getElementById('intro')?.classList.add('hide'),1250));
+</script>
+</body>
+</html>
