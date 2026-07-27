@@ -28,15 +28,19 @@ function sendFile(req, res, file) {
       res.end('Not found');
       return;
     }
+
+    const extension = path.extname(file).toLowerCase();
     res.writeHead(200, {
-      'Content-Type': mime[path.extname(file).toLowerCase()] || 'application/octet-stream',
+      'Content-Type': mime[extension] || 'application/octet-stream',
       'Content-Length': stat.size,
-      'Cache-Control': 'public, max-age=604800'
+      'Cache-Control': extension === '.html' ? 'no-store, max-age=0' : 'public, max-age=604800'
     });
+
     if (req.method === 'HEAD') {
       res.end();
       return;
     }
+
     fs.createReadStream(file).pipe(res);
   });
 }
@@ -49,7 +53,7 @@ const server = http.createServer(function (req, res) {
     return;
   }
 
-  let relative = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/,'');
+  let relative = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
   relative = relative.replace(/^assets\/(?:photos|video)\//, '');
   const file = path.resolve(root, relative);
 
