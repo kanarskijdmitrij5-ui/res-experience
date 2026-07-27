@@ -55,21 +55,16 @@
     @media(max-width:560px){.hero{min-height:660px}.hero-copy{padding-bottom:80px}.editorial{gap:8px}.wide,.half,.third,.tall,.seven,.eight,.four{grid-column:span 12;aspect-ratio:4/3}.contacts{grid-template-columns:1fr}.service{display:block}.service small{display:block;text-align:left;margin-top:8px}.legal{display:block}.legal span{display:block;margin-top:8px}.nav{padding-top:18px}.contact-link{display:none}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.shot img{transition:none}}
   
-    /* Compact animated photo carousels */
-    .editorial{display:flex;gap:clamp(10px,1.2vw,18px);overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;padding:10px 0 16px;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+    /* Uniform photo carousels */
+    .editorial{display:flex;gap:16px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;padding:18px 7vw 26px;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
     .editorial::-webkit-scrollbar{display:none}
-    .editorial .shot{flex:0 0 clamp(280px,62vw,720px);height:clamp(290px,42vw,560px);min-height:0;scroll-snap-align:start;scroll-snap-stop:always;border:1px solid rgba(255,255,255,.09);opacity:.48;transform:scale(.93);filter:saturate(.78);transition:transform .85s cubic-bezier(.16,.84,.25,1),opacity .65s ease,filter .65s ease,box-shadow .85s ease}
-    .editorial .wide{flex-basis:clamp(350px,78vw,1050px)}
-    .editorial .seven,.editorial .eight{flex-basis:clamp(320px,70vw,860px)}
-    .editorial .half{flex-basis:clamp(260px,52vw,620px)}
-    .editorial .third,.editorial .four{flex-basis:clamp(240px,44vw,520px)}
-    .editorial .tall{flex-basis:clamp(250px,46vw,540px);height:clamp(360px,58vw,700px)}
-    .editorial .shot img{transform:scale(1.08);transition:transform 1.2s cubic-bezier(.16,.84,.25,1),filter .8s ease}
-    .editorial .shot.is-active{opacity:1;transform:scale(1);filter:saturate(1);box-shadow:0 22px 55px rgba(0,0,0,.34);z-index:1}
-    .editorial .shot.is-active img{transform:scale(1.01);filter:brightness(1.03) contrast(1.04)}
-    .editorial .shot.is-active:before{content:"";position:absolute;z-index:2;left:0;top:0;width:54px;height:2px;background:var(--red);transform-origin:left;animation:cardLine .7s cubic-bezier(.16,.84,.25,1) both}
-    @keyframes cardLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-    @media(max-width:560px){.story{padding-top:72px;padding-bottom:72px}.editorial{gap:10px}.editorial .shot,.editorial .wide,.editorial .seven,.editorial .eight{flex-basis:84vw;height:58vw;min-height:260px}.editorial .half,.editorial .third,.editorial .four{flex-basis:72vw}.editorial .tall{flex-basis:64vw;height:104vw}}
+    .editorial .shot,.editorial .wide,.editorial .seven,.editorial .eight,.editorial .half,.editorial .third,.editorial .four,.editorial .tall{flex:0 0 min(76vw,920px);width:auto;height:clamp(300px,48vw,620px);min-height:0;aspect-ratio:auto;scroll-snap-align:center;scroll-snap-stop:always;border:1px solid rgba(255,255,255,.1);opacity:.3;transform:scale(.84);filter:brightness(.72) saturate(.6);transition:transform .65s cubic-bezier(.16,.84,.25,1),opacity .45s ease,filter .45s ease,box-shadow .65s ease}
+    .editorial .shot img{transform:scale(1.1);transition:transform .7s cubic-bezier(.16,.84,.25,1),filter .5s ease}
+    .editorial .shot.is-active{opacity:1;transform:scale(1);filter:brightness(1) saturate(1);box-shadow:0 24px 60px rgba(0,0,0,.42);z-index:1}
+    .editorial .shot.is-active img{transform:scale(1.01);filter:brightness(1.04) contrast(1.04)}
+    .editorial .shot.is-active:before{content:"";position:absolute;z-index:2;left:0;top:0;width:66px;height:3px;background:var(--red);animation:activeLine .5s ease both}
+    @keyframes activeLine{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
+    @media(max-width:560px){.story{padding-top:62px;padding-bottom:62px}.editorial{gap:12px;padding:12px 10vw 22px}.editorial .shot,.editorial .wide,.editorial .seven,.editorial .eight,.editorial .half,.editorial .third,.editorial .four,.editorial .tall{flex-basis:78vw;height:60vw;min-height:250px}}
     @media(prefers-reduced-motion:reduce){.editorial .shot,.editorial .shot img{transition:none}.editorial .shot{opacity:1;transform:none}}
 </style>
 </head>
@@ -78,14 +73,14 @@
 <header class="nav"><a class="brand" href="#top">RES</a><a class="contact-link" href="#contacts">Связаться</a></header>
 <main id="top">
   <section class="hero">
-    <video autoplay muted loop playsinline poster="assets/photos/p03.jpg"><source src="res-hero-web.mp4?v=4" type="video/mp4"></video>
+    <video autoplay muted loop playsinline poster="assets/photos/p03.jpg"><source src="res-hero-web.mp4?v=5" type="video/mp4"></video>
     <div class="hero-copy"><div class="kicker">Rent Event Service · Красноярск</div><h1>Создаём пространство.</h1><p>От пустой площадки до полностью готового события — конструкции, мебель, свет, оформление и техническое сопровождение.</p></div>
   </section>
 
   <section class="chapter reveal"><h2>Мы не сдаём шатры.<br><em>Мы создаём места, где происходят события.</em></h2></section>
 
   <section class="cinema">
-    <video autoplay muted loop playsinline poster="assets/photos/p04.jpg"><source src="assets/video/ready-space.mp4?v=cinema6" type="video/mp4"></video>
+    <video autoplay muted loop playsinline poster="assets/photos/p04.jpg"><source src="assets/video/ready-space.mp4?v=cinema7" type="video/mp4"></video>
     <div class="cinema-copy"><h3>Когда всё готово,<br>остаётся только событие.</h3></div>
   </section>
 
@@ -160,24 +155,7 @@
   const galleryObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.parentElement.querySelectorAll('.shot').forEach(card=>card.classList.remove('is-active'));entry.target.classList.add('is-active');}}),{root:null,threshold:.72});
   document.querySelectorAll('.editorial .shot').forEach(card=>galleryObserver.observe(card));
   let entrySoundPlayed=false;
-  function playEntrySound(){
-    if(entrySoundPlayed)return;
-    entrySoundPlayed=true;
-    const AudioCtx=window.AudioContext||window.webkitAudioContext;
-    if(!AudioCtx)return;
-    const ctx=new AudioCtx();
-    const gain=ctx.createGain();
-    const oscillator=ctx.createOscillator();
-    oscillator.type='sine';
-    oscillator.frequency.setValueAtTime(392,ctx.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(587,ctx.currentTime+.16);
-    gain.gain.setValueAtTime(.0001,ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.035,ctx.currentTime+.02);
-    gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.34);
-    oscillator.connect(gain).connect(ctx.destination);
-    oscillator.start();
-    oscillator.stop(ctx.currentTime+.36);
-  }
+  function playEntrySound(){if(entrySoundPlayed)return;entrySoundPlayed=true;const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;const ctx=new AudioCtx();const gain=ctx.createGain();const oscillator=ctx.createOscillator();oscillator.type='sine';oscillator.frequency.setValueAtTime(392,ctx.currentTime);oscillator.frequency.exponentialRampToValueAtTime(587,ctx.currentTime+.16);gain.gain.setValueAtTime(.0001,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.035,ctx.currentTime+.02);gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.34);oscillator.connect(gain).connect(ctx.destination);oscillator.start();oscillator.stop(ctx.currentTime+.36)}
   window.addEventListener('pointerdown',playEntrySound,{once:true,passive:true});
 </script>
 </body>
