@@ -54,21 +54,32 @@
     @media(max-width:850px){.wide{aspect-ratio:4/3}.half,.third,.tall,.seven,.eight,.four{grid-column:span 6;aspect-ratio:4/3}.contacts{grid-template-columns:1fr 1fr}.cinema{height:72svh}.chapter,.interlude{min-height:65svh}}
     @media(max-width:560px){.hero{min-height:660px}.hero-copy{padding-bottom:80px}.editorial{gap:8px}.wide,.half,.third,.tall,.seven,.eight,.four{grid-column:span 12;aspect-ratio:4/3}.contacts{grid-template-columns:1fr}.service{display:block}.service small{display:block;text-align:left;margin-top:8px}.legal{display:block}.legal span{display:block;margin-top:8px}.nav{padding-top:18px}.contact-link{display:none}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.shot img{transition:none}}
-  </style>
+  
+    /* Compact photo carousels */
+    .editorial{display:flex;gap:clamp(10px,1.2vw,18px);overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 0 12px;-webkit-overflow-scrolling:touch}
+    .editorial::-webkit-scrollbar{display:none}
+    .editorial .shot{flex:0 0 clamp(280px,62vw,720px);height:clamp(290px,42vw,560px);min-height:0;scroll-snap-align:start;border:1px solid rgba(255,255,255,.09)}
+    .editorial .wide{flex-basis:clamp(350px,78vw,1050px)}
+    .editorial .seven,.editorial .eight{flex-basis:clamp(320px,70vw,860px)}
+    .editorial .half{flex-basis:clamp(260px,52vw,620px)}
+    .editorial .third,.editorial .four{flex-basis:clamp(240px,44vw,520px)}
+    .editorial .tall{flex-basis:clamp(250px,46vw,540px);height:clamp(360px,58vw,700px)}
+    @media(max-width:560px){.story{padding-top:72px;padding-bottom:72px}.editorial{gap:10px}.editorial .shot,.editorial .wide,.editorial .seven,.editorial .eight{flex-basis:84vw;height:58vw;min-height:260px}.editorial .half,.editorial .third,.editorial .four{flex-basis:72vw}.editorial .tall{flex-basis:64vw;height:104vw}}
+</style>
 </head>
 <body>
 <div class="intro" id="intro" aria-hidden="true"><div class="intro-logo">RES</div></div>
 <header class="nav"><a class="brand" href="#top">RES</a><a class="contact-link" href="#contacts">Связаться</a></header>
 <main id="top">
   <section class="hero">
-    <video autoplay muted loop playsinline poster="assets/photos/p03.jpg"><source src="res-hero-web.mp4?v=2" type="video/mp4"></video>
+    <video autoplay muted loop playsinline poster="assets/photos/p03.jpg"><source src="res-hero-web.mp4?v=3" type="video/mp4"></video>
     <div class="hero-copy"><div class="kicker">Rent Event Service · Красноярск</div><h1>Создаём пространство.</h1><p>От пустой площадки до полностью готового события — конструкции, мебель, свет, оформление и техническое сопровождение.</p></div>
   </section>
 
   <section class="chapter reveal"><h2>Мы не сдаём шатры.<br><em>Мы создаём места, где происходят события.</em></h2></section>
 
   <section class="cinema">
-    <video autoplay muted loop playsinline poster="assets/photos/p04.jpg"><source src="assets/video/ready-space.mp4?v=cinema4" type="video/mp4"></video>
+    <video autoplay muted loop playsinline poster="assets/photos/p04.jpg"><source src="assets/video/ready-space.mp4?v=cinema5" type="video/mp4"></video>
     <div class="cinema-copy"><h3>Когда всё готово,<br>остаётся только событие.</h3></div>
   </section>
 
