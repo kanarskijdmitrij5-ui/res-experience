@@ -63,10 +63,11 @@
     .editorial .shot.is-active img{transform:scale(1.01);filter:brightness(1.04) contrast(1.04)}
     .editorial .shot.is-active:before{content:"";position:absolute;z-index:2;left:0;top:0;width:66px;height:3px;background:var(--red);animation:activeLine .5s ease both}
     @keyframes activeLine{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
-    .gallery-controls{display:flex;justify-content:center;gap:8px;padding:0 clamp(16px,4vw,56px)}
-    .gallery-control{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:transparent;color:#f5f5f2;font:300 20px/1 Arial,sans-serif;cursor:pointer;opacity:.55;transition:opacity .2s ease,background .2s ease,border-color .2s ease}
-    .gallery-control:hover{opacity:1;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.55)}
-    @media(max-width:560px){.story{padding-top:62px;padding-bottom:62px}.editorial{gap:12px;padding:12px 10vw 12px}.editorial .shot,.editorial .wide,.editorial .seven,.editorial .eight,.editorial .half,.editorial .third,.editorial .four,.editorial .tall{flex-basis:78vw;height:60vw;min-height:250px}.gallery-controls{padding:0 10vw}.gallery-control{width:32px;height:32px}}
+    .gallery-story{position:relative}
+    .gallery-controls{position:absolute;z-index:10;left:clamp(22px,6vw,88px);right:clamp(22px,6vw,88px);display:flex;justify-content:space-between;align-items:center;pointer-events:none;transform:translateY(-50%)}
+    .gallery-control{pointer-events:auto;width:42px;height:42px;border:1px solid rgba(255,255,255,.26);border-radius:50%;background:rgba(9,9,9,.22);backdrop-filter:blur(9px);color:rgba(255,255,255,.92);font:300 23px/1 Arial,sans-serif;cursor:pointer;opacity:.34;transition:opacity .22s ease,background .22s ease,transform .22s ease}
+    .gallery-story:hover .gallery-control{opacity:.82}.gallery-control:hover{background:rgba(9,9,9,.5);transform:scale(1.06)}
+    @media(max-width:560px){.story{padding-top:62px;padding-bottom:62px}.editorial{gap:12px;padding:12px 10vw 12px}.editorial .shot,.editorial .wide,.editorial .seven,.editorial .eight,.editorial .half,.editorial .third,.editorial .four,.editorial .tall{flex-basis:78vw;height:60vw;min-height:250px}.gallery-controls{left:18px;right:18px}.gallery-control{width:38px;height:38px;opacity:.55}}
     @media(prefers-reduced-motion:reduce){.editorial .shot,.editorial .shot img{transition:none}.editorial .shot{opacity:1;transform:none}}
 </style>
 </head>
@@ -75,14 +76,14 @@
 <header class="nav"><a class="brand" href="#top">RES</a><a class="contact-link" href="#contacts">Связаться</a></header>
 <main id="top">
   <section class="hero">
-    <video autoplay muted loop playsinline poster="assets/photos/p03.jpg"><source src="res-hero-web.mp4?v=6" type="video/mp4"></video>
+    <video autoplay muted loop playsinline poster="assets/photos/p03.jpg"><source src="res-hero-web.mp4?v=7" type="video/mp4"></video>
     <div class="hero-copy"><div class="kicker">Rent Event Service · Красноярск</div><h1>Создаём пространство.</h1><p>От пустой площадки до полностью готового события — конструкции, мебель, свет, оформление и техническое сопровождение.</p></div>
   </section>
 
   <section class="chapter reveal"><h2>Мы не сдаём шатры.<br><em>Мы создаём места, где происходят события.</em></h2></section>
 
   <section class="cinema">
-    <video autoplay muted loop playsinline poster="assets/photos/p04.jpg"><source src="assets/video/ready-space.mp4?v=cinema8" type="video/mp4"></video>
+    <video autoplay muted loop playsinline poster="assets/photos/p04.jpg"><source src="assets/video/ready-space.mp4?v=cinema9" type="video/mp4"></video>
     <div class="cinema-copy"><h3>Когда всё готово,<br>остаётся только событие.</h3></div>
   </section>
 
@@ -156,7 +157,7 @@
 
   const galleryObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.parentElement.querySelectorAll('.shot').forEach(card=>card.classList.remove('is-active'));entry.target.classList.add('is-active');}}),{root:null,threshold:.72});
   document.querySelectorAll('.editorial .shot').forEach(card=>galleryObserver.observe(card));
-  document.querySelectorAll('.editorial').forEach(gallery=>{const controls=document.createElement('div');controls.className='gallery-controls';const prev=document.createElement('button');const next=document.createElement('button');prev.className=next.className='gallery-control';prev.type=next.type='button';prev.setAttribute('aria-label','Предыдущее фото');next.setAttribute('aria-label','Следующее фото');prev.textContent='←';next.textContent='→';const step=()=>gallery.clientWidth*.72;prev.addEventListener('click',()=>gallery.scrollBy({left:-step(),behavior:'smooth'}));next.addEventListener('click',()=>gallery.scrollBy({left:step(),behavior:'smooth'}));controls.append(prev,next);gallery.after(controls);});
+  document.querySelectorAll('.editorial').forEach(gallery=>{const story=gallery.closest('.story');story.classList.add('gallery-story');const controls=document.createElement('div');controls.className='gallery-controls';const prev=document.createElement('button');const next=document.createElement('button');prev.className=next.className='gallery-control';prev.type=next.type='button';prev.setAttribute('aria-label','Предыдущее фото');next.setAttribute('aria-label','Следующее фото');prev.textContent='←';next.textContent='→';const step=()=>gallery.clientWidth*.72;prev.addEventListener('click',()=>gallery.scrollBy({left:-step(),behavior:'smooth'}));next.addEventListener('click',()=>gallery.scrollBy({left:step(),behavior:'smooth'}));controls.append(prev,next);story.append(controls);const place=()=>controls.style.top=(gallery.offsetTop+gallery.clientHeight/2)+'px';place();window.addEventListener('resize',place);});
   let entrySoundPlayed=false;
   function playEntrySound(){if(entrySoundPlayed)return;entrySoundPlayed=true;const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;const ctx=new AudioCtx();const gain=ctx.createGain();const oscillator=ctx.createOscillator();oscillator.type='sine';oscillator.frequency.setValueAtTime(392,ctx.currentTime);oscillator.frequency.exponentialRampToValueAtTime(587,ctx.currentTime+.16);gain.gain.setValueAtTime(.0001,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.035,ctx.currentTime+.02);gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.34);oscillator.connect(gain).connect(ctx.destination);oscillator.start();oscillator.stop(ctx.currentTime+.36)}
   window.addEventListener('pointerdown',playEntrySound,{once:true,passive:true});
