@@ -6,7 +6,6 @@
   <meta name="theme-color" content="#000000">
   <title>RES Experience — пространства для событий</title>
   <meta name="description" content="RES создаёт пространства для событий любого масштаба.">
-  <link rel="preload" href="assets/video/build.mp4" as="video" type="video/mp4">
   <style>
     :root{--bg:#000;--paper:#f4f4f0;--text:#f5f5f2;--muted:#9b9b96;--line:rgba(255,255,255,.16);--red:#ed1c24}
     *{box-sizing:border-box}
@@ -20,7 +19,7 @@
     .brand{font-size:24px;letter-spacing:.22em;font-weight:600}.brand:before{content:"";display:inline-block;width:20px;height:2px;background:var(--red);vertical-align:middle;margin:0 9px 5px 0}
     .contact-link{font-size:11px;text-transform:uppercase;letter-spacing:.2em}
     .hero{position:relative;height:100svh;min-height:640px;background:#050505;overflow:hidden;display:flex;align-items:flex-end}
-    .hero video,.hero>img,.cinema video,.cinema>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .hero video,.cinema video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
     .hero video{filter:brightness(.62) contrast(1.06);animation:heroReveal 1.6s ease .65s both}@keyframes heroReveal{from{opacity:0;transform:scale(1.015)}to{opacity:1;transform:none}}
     .hero:after,.cinema:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.12) 42%,rgba(0,0,0,.82))}
     .hero-copy{position:relative;z-index:2;padding:0 clamp(20px,6vw,88px) clamp(54px,8vw,110px);max-width:1150px}
@@ -55,21 +54,21 @@
     @media(max-width:850px){.wide{aspect-ratio:4/3}.half,.third,.tall,.seven,.eight,.four{grid-column:span 6;aspect-ratio:4/3}.contacts{grid-template-columns:1fr 1fr}.cinema{height:72svh}.chapter,.interlude{min-height:65svh}}
     @media(max-width:560px){.hero{min-height:660px}.hero-copy{padding-bottom:80px}.editorial{gap:8px}.wide,.half,.third,.tall,.seven,.eight,.four{grid-column:span 12;aspect-ratio:4/3}.contacts{grid-template-columns:1fr}.service{display:block}.service small{display:block;text-align:left;margin-top:8px}.legal{display:block}.legal span{display:block;margin-top:8px}.nav{padding-top:18px}.contact-link{display:none}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.shot img{transition:none}}
-  </style>
+  .video-play{position:absolute;z-index:3;right:clamp(20px,6vw,88px);bottom:clamp(24px,5vw,58px);border:1px solid rgba(255,255,255,.55);background:rgba(0,0,0,.24);backdrop-filter:blur(8px);color:#fff;padding:12px 16px;font:500 11px/1 Inter,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}.video-play span{margin-left:14px;color:var(--red);font-size:16px}.video-play.is-playing{opacity:0;pointer-events:none}</style>
 </head>
 <body>
 <div class="intro" id="intro" aria-hidden="true"><div class="intro-logo">RES</div></div>
 <header class="nav"><a class="brand" href="#top">RES</a><a class="contact-link" href="#contacts">Связаться</a></header>
 <main id="top">
   <section class="hero">
-    <img src="assets/photos/p01.jpg" alt="Шатровая конструкция RES">
+    <video class="deferred-video" muted loop playsinline preload="none" poster="assets/photos/p01.jpg" data-src="assets/video/build.mp4"></video><button class="video-play" type="button" aria-label="Включить видео">Смотреть видео <span>→</span></button>
     <div class="hero-copy"><div class="kicker">Rent Event Service · Красноярск</div><h1>Создаём пространство.</h1><p>От пустой площадки до полностью готового события — конструкции, мебель, свет, оформление и техническое сопровождение.</p></div>
   </section>
 
   <section class="chapter reveal"><h2>Мы не сдаём шатры.<br><em>Мы создаём места, где происходят события.</em></h2></section>
 
   <section class="cinema">
-    <img src="assets/photos/p02.jpg" alt="Готовое пространство RES">
+    <video class="deferred-video" muted loop playsinline preload="none" poster="assets/photos/p02.jpg" data-src="assets/video/ready-space.mp4"></video><button class="video-play" type="button" aria-label="Включить видео">Смотреть видео <span>→</span></button>
     <div class="cinema-copy"><h3>Когда всё готово,<br>остаётся только событие.</h3></div>
   </section>
 
@@ -140,6 +139,7 @@
   const cinemaIo=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting) cinema.classList.add('in-view')}),{threshold:.18});
   if(cinema) cinemaIo.observe(cinema);
   window.addEventListener('load',()=>setTimeout(()=>document.getElementById('intro')?.classList.add('hide'),1250));
+  document.querySelectorAll('.deferred-video').forEach(video=>{const play=video.parentElement.querySelector('.video-play');const start=()=>{if(!video.dataset.ready){const source=document.createElement('source');source.src=video.dataset.src;source.type='video/mp4';video.appendChild(source);video.dataset.ready='1';video.load();}video.play().then(()=>play?.classList.add('is-playing')).catch(()=>{});};play?.addEventListener('click',start);video.addEventListener('click',start);});
 </script>
 </body>
 </html>
