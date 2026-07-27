@@ -1,4 +1,11 @@
-.DS_Store
-Thumbs.db
-node_modules/
-.env
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": { "builder": "RAILPACK" },
+  "deploy": {
+    "startCommand": "npm start",
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 30,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 3
+  }
+}
